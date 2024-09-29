@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>{{ floor }}</title>
+{% endblock %}
+
+{% block content %}
+    <h1>КІМНАТИ</h1>
+    {% for room in floor.rooms.all %}
+        <a href="/room/{{ room.id }}" style="text-decoration: none"><h3>{{ room }}</h3></a>
+    {% endfor %}
+{% endblock %}

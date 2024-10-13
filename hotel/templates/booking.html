@@ -5,14 +5,18 @@
 {% endblock %}
 
 {% block content %}
-  <h1>УСІ ЗАМОВЛЕННЯ:</h1>
-  <ul>
-    {% for booking in bookings %}
-      <li><h3>{{ booking }}</h3></li>
-    {% endfor %}
-  </ul>
+  <h1 class="display-2">Усі замовлення:</h1><br>
 
-  <h1>ЗРОБИТИ ЗАМОВЛЕННЯ</h1>
+  <div class="container">
+    <ul class="list-group">
+      {% for booking in bookings %}
+        <li class="list-group-item disabled"><h3>{{ booking }}</h3></li>
+      {% endfor %}
+    </ul>
+  </div>
+  <br>
 
-  <button>зробити замовлення</button>
+  <h1 class="display-2">Зробити замовлення</h1>
+
+  <button type="button" class="btn btn-primary">зробити замовлення</button>
 {% endblock %}

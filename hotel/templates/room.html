@@ -5,9 +5,13 @@
 {% endblock %}
 
 {% block content %}
-    <h1>ІНФОРМАЦІЯ ПРО КІМНАТУ</h1>
-    <h3>опис</h3>
-    {{ room.describe }}
-    <h3>ціна</h3>
-    {{ room.price }} UAH
+    <h1 class="display-2">Інформація про кімнату №{{ room.number }}</h1><br>
+    <div>
+        <h3 class="display-4">Опис</h3>
+        {{ room.describe }}
+    </div>
+    <div>
+        <h3 class="display-4">Ціна</h3>
+        {{ room.price }} UAH
+    </div>
 {% endblock %}

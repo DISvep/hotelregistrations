@@ -5,8 +5,23 @@
 {% endblock %}
 
 {% block content %}
-    <h1>КІМНАТИ</h1>
-    {% for room in floor.rooms.all %}
-        <a href="/room/{{ room.id }}" style="text-decoration: none"><h3>{{ room }}</h3></a>
-    {% endfor %}
+    <h1 class="display-2">Кімнати</h1><br>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Room</th>
+                <th scope="col">Price</th>
+                <th scope="col">Describe</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for room in floor.rooms.all %}
+                <tr>
+                    <th scope="row"><a href="/room/{{ room.id }}" style="text-decoration: none">{{ room.number }}</a></th>
+                    <td><a href="/room/{{ room.id }}" style="text-decoration: none">{{ room.price }}</a></td>
+                    <td><a href="/room/{{ room.id }}" style="text-decoration: none">{{ room.describe }}</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

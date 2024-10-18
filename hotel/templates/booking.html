@@ -10,7 +10,7 @@
   <div class="container">
     <ul class="list-group">
       {% for booking in bookings %}
-        <li class="list-group-item disabled"><h3>{{ booking }}</h3></li>
+        <li class="list-group-item disabled"><h3>{{ booking }} [{{ booking.start_time }}]-[{{ booking.end_time }}]</h3></li>
       {% endfor %}
     </ul>
   </div>
@@ -18,5 +18,5 @@
 
   <h1 class="display-2">Зробити замовлення</h1>
 
-  <button type="button" class="btn btn-primary">зробити замовлення</button>
+  <a class="btn btn-primary" href="{% url 'booking_form' %}">зробити замовлення</a>
 {% endblock %}

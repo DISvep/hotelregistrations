@@ -11,6 +11,7 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
           <div class="container-fluid">
               <a class="navbar-brand" href="/">Main Page</a>
+
               <div class="collapse navbar-collapse" id="navbarNav">
                   <ul class="navbar-nav">
                       <li class="nav-item">
@@ -18,8 +19,36 @@
                       </li>
                   </ul>
               </div>
+
+              <div class="row justify-content-center">
+                  {% if user.is_authenticated %}
+                      <div class="col">
+                          <ul class="navbar-nav">
+                              <li class="nav-item">
+                                  <a class="nav-link" style="user-select: none">{{ user.username }}</a>
+                              </li>
+                          </ul>
+                      </div>
+                      <div class="col">
+                          <form method="post" action="{% url 'logout' %}">{% csrf_token %} <button type="submit" class="btn btn-primary">Вийти</button></form>
+                      </div>
+                  {% else %}
+                      <div class="col">
+                          <ul class="navbar-nav">
+                              <li class="nav-item">
+                                  <a class="nav-link" style="user-select: none">Guest</a>
+                              </li>
+                          </ul>
+                      </div>
+                      <div class="col">
+                          <a class="btn btn-primary" href="/login" role="button">Увійти</a>
+                      </div>
+                  {% endif %}
+              </div>
+
           </div>
     </nav>
+
     <div class="container text-center">
         {% block content %}
         {% endblock %}

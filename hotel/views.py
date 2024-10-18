@@ -1,5 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login
 from .models import Floor, Room, Booking
+from .forms import UserRegistrationForm, BookingForm
 
 
 # Create your views here.
@@ -47,6 +50,7 @@ def room(request, room_id):
     )
 
 
+@login_required
 def booking(request):
     bookings = Booking.objects.all()
 
@@ -59,3 +63,55 @@ def booking(request):
         'booking.html',
         context=context
     )
+
+
+@login_required
+def create_booking(request):
+    if request.method == "POST":
+        form = BookingForm(request.POST)
+
+        if form.is_valid():
+            booking_ = form.save(commit=False)
+            booking_.user = request.user
+            booking_.save()
+
+            return redirect('booking')
+        else:
+            return render(
+                request,
+                'booking_form.html',
+                {'form': form}
+            )
+    else:
+        form = BookingForm(request.POST)
+
+        return render(
+            request,
+            'booking_form.html',
+            {'form': form}
+        )
+
+
+def register(request):
+    if request.method == "POST":
+        form = UserRegistrationForm(request.POST)
+
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+
+            return redirect('/')
+        else:
+            return render(
+                request,
+                'register.html',
+                {'form': form}
+            )
+    else:
+        form = UserRegistrationForm()
+
+        return render(
+            request,
+            "register.html",
+            {"form": form}
+        )

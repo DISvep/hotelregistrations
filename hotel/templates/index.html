@@ -5,11 +5,27 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Вітаємо на сайті реєстрування кімнат у готелі "coolhotel1"</h1>
-    {% for floor in floors %}
-        <a href="/floor/{{ floor.id }}" style="text-decoration: none"><h2>{{ floor }}</h2></a>
-        {% for room in floor.rooms.all %}
-             <a href="/room/{{ room.id }}" style="text-decoration: none">{{ room }}</a><p>
-        {% endfor %}
-    {% endfor %}
+    <h1 class="display-1" style="user-select: none">Вітаємо на сайті реєстрування кімнат у готелі "coolhotel1"</h1><br>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col" style="user-select: none">Floor</th>
+                <th scope="col" style="user-select: none">Room</th>
+                <th scope="col" style="user-select: none">Price</th>
+                <th scope="col" style="user-select: none">Describe</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for floor in floors %}
+                {% for room in floor.rooms.all %}
+                    <tr>
+                        <th scope="row"><a href="/floor/{{ floor.id }}" style="text-decoration: none">{{ floor.number }}</th>
+                            <td><a href="/room/{{ room.id }}" style="text-decoration: none">{{ room.number }}</a></td>
+                            <td><a href="/room/{{ room.id }}" style="text-decoration: none">{{ room.price }}</a></td>
+                            <td><a href="/room/{{ room.id }}" style="text-decoration: none">{{ room.describe }}</a></td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

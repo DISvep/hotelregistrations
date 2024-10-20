@@ -72,15 +72,16 @@ def create_booking(request):
         if form.is_valid():
             booking_ = form.save(commit=False)
             booking_.user = request.user
-            booking_.save()
             same_room = Booking.objects.all().filter(room=booking_.room)
             for room_ in same_room:
+                print(room_)
                 if room_.start_time < booking_.start_time < room_.end_time or booking_.end_time > room_.start_time:
                     return render(
                         request,
                         'booking_form.html',
                         {'form': form, "message": "Вже є така заброньована кімната у рамках вашого часу"}
                     )
+            booking_.save()
 
             return redirect('booking')
         else:

@@ -9,7 +9,56 @@
         <h1 class="display-4 text-start" style="user-select: none">Вітаємо на сайті реєстрування кімнат у готелі "coolhotel1"</h1>
         <h2 class="display-7 text-end" style="user-select: none">Знайдіть ідеальну кімнату для мешкання у нашому готелі!</h2>
     </div>
-    <hr>
+
+    <div class="container text-bg-secondary p-2">
+        <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="INPUT 1" aria-label="Search">
+            <input class="form-control me-2" type="search" placeholder="INPUT 2" aria-label="Search">
+            <input class="form-control me-2" type="search" placeholder="Кількість осіб" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Шукати</button>
+        </form>
+    </div>
+    <br>
+    <div>
+        <h5 class="display-6 text-start">Пошук за типом помешкання</h5>
+        <div class="container text-center">
+            <div class="row">
+                <div class="col">
+                    <div class="card" style="width: 15rem;">
+                        <img src="..." class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">some type</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 15rem;">
+                        <img src="..." class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">some type</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 15rem;">
+                        <img src="..." class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">some type</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 15rem;">
+                        <img src="{% static 'hotel/room.jpg' %}" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">some type</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <table class="table">
         <thead>
             <tr>

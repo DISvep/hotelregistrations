@@ -50,7 +50,6 @@ def room(request, room_id):
     )
 
 
-@login_required
 def booking(request):
     bookings = Booking.objects.all()
 
@@ -74,13 +73,21 @@ def create_booking(request):
             booking_ = form.save(commit=False)
             booking_.user = request.user
             booking_.save()
+            same_room = Booking.objects.all().filter(room=booking_.room)
+            for room_ in same_room:
+                if room_.start_time < booking_.start_time < room_.end_time or booking_.end_time > room_.start_time:
+                    return render(
+                        request,
+                        'booking_form.html',
+                        {'form': form, "message": "Вже є така заброньована кімната у рамках вашого часу"}
+                    )
 
             return redirect('booking')
         else:
             return render(
                 request,
                 'booking_form.html',
-                {'form': form}
+                {'form': form, "message": ""}
             )
     else:
         form = BookingForm(request.POST)
@@ -88,7 +95,7 @@ def create_booking(request):
         return render(
             request,
             'booking_form.html',
-            {'form': form}
+            {'form': form, "message": ""}
         )
 
 

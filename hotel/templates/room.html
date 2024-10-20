@@ -1,17 +1,23 @@
 {% extends "base.html" %}
 
 {% block title %}
-    <title>{{ room }}</title>
+<title>{{ room }}</title>
 {% endblock %}
 
 {% block content %}
-    <h1 class="display-2">Інформація про кімнату №{{ room.number }}</h1><br>
-    <div>
-        <h3 class="display-4">Опис</h3>
-        {{ room.describe }}
-    </div>
-    <div>
-        <h3 class="display-4">Ціна</h3>
-        {{ room.price }} UAH
-    </div>
+<h1 class="display-2">Інформація про кімнату №{{ room.number }}</h1><br>
+
+<div class="border border-primary">
+    <h3 class="display-4">Опис</h3>
+    <hr class="border border-primary border-3 opacity-75">
+    <p class="fs-4">{{ room.describe }}</p>
+</div>
+
+<br>
+
+<div class="border border-primary">
+    <h3 class="display-4">Ціна</h3>
+    <hr class="border border-primary border-3 opacity-75">
+    <p class="fs-4">{{ room.price }} UAH</p>
+</div>
 {% endblock %}

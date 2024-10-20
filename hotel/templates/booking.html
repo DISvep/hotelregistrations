@@ -1,22 +1,47 @@
 {% extends "base.html" %}
 
 {% block title %}
-  <title> BOOKING </title>
+<title> BOOKING </title>
 {% endblock %}
 
 {% block content %}
-  <h1 class="display-2">Усі замовлення:</h1><br>
+<h1 class="display-2">Усі замовлення:</h1><br>
 
-  <div class="container">
+<div class="container">
     <ul class="list-group">
-      {% for booking in bookings %}
-        <li class="list-group-item disabled"><h3>{{ booking }} [{{ booking.start_time }}]-[{{ booking.end_time }}]</h3></li>
-      {% endfor %}
+        {% for booking in bookings %}
+        <li class="list-group-item disabled"><h3>{{ booking }} [{{ booking.start_time }}]-[{{ booking.end_time }}]</h3>
+        </li>
+        {% endfor %}
     </ul>
-  </div>
-  <br>
+</div>
+<br>
 
-  <h1 class="display-2">Зробити замовлення</h1>
+<h1 class="display-2">Зробити замовлення</h1>
 
-  <a class="btn btn-primary" href="{% url 'booking_form' %}">зробити замовлення</a>
+{% if user.is_authenticated %}
+<a class="btn btn-primary" href="{% url 'booking_form' %}">зробити замовлення</a>
+{% else %}
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+    зробити замовлення
+</button>
+{% endif %}
+
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="loginModalLabel">Ви не авторизовані!</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Ви не авторизовані! Будь-ласка авторизуйтесь.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Відміна</button>
+                <a href="{% url 'login' %}" class="btn btn-primary">Увійти</a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

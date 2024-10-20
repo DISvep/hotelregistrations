@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>create booking</title>
+{% endblock %}
+
+{% block content %}
+<h1>Створити замовлення</h1>
+<div class="container col-xl-10 col-xxl-8 px-4 py-5">
+    <form method="post" class="p-5 p-md-5 border rounded-3 bg-body-tertiary">
+        {% if message %}
+        <h5>{{message}}</h5>
+        <hr class="border border-danger border-2 opacity-50">
+        {% endif %}
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="w-100 btn btn-lg btn-primary">Забронювати</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Login</title>
+{% endblock %}
+
+{% block content %}
+<h1 class="display-2">Увійдіть у аккаунт</h1>
+<hr class="border border-danger border-2 opacity-50">
+<div class="container col-xl-10 col-xxl-8 px-4 py-5">
+    <form method="post" class="p-5 p-md-5 border rounded-3 bg-body-tertiary">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Увійти</button>
+    </form>
+    <hr class="border border-primary border-3 opacity-75">
+    Не маєте аккаунту? Тоді <a href="{% url 'register' %}" class="btn btn-primary">Зареєструватися</a>
+</div>
+{% endblock %}

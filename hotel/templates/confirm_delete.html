@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>delete booking</title>
+{% endblock title %}
+
+{% block content %}
+<div class="container min-vh-100 d-flex col-xl-10 col-xxl-8 px-4 py-5 justify-content-center align-items-center">
+    <div class="card" style="width: 25rem;">
+        <div class="card-body">
+            <h1>Delete Booking</h1>
+            <p>Delete {{ booking }}?</p>
+            <form method="post">
+                {% csrf_token %}
+                <button class='btn btn-outline-danger' type="submit">Yes</button>
+            </form>
+            <a href="{% url 'room' booking.room.pk %}" class='btn btn-primary mt-1'>Cancel</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -2,22 +2,175 @@
 
 {% block title %}
 <title>{{ room }}</title>
+<style>
+    .photo-container {
+      position: relative;
+      display: inline-block;
+      width: 900px; /* Ширина изображения */
+      height: 500px; /* Высота изображения */
+    }
+
+    .badge-photo {
+      position: absolute;
+      top: -5px;
+      right: 140px;
+      background-color: red;
+      color: yellow;
+      font-weight: bold;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+      font-size: 24px;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
 {% endblock %}
 
+{% load static %}
+
 {% block content %}
-<h1 class="display-2">Інформація про кімнату №{{ room.number }}</h1><br>
+<div class="container">
+    <p class="fs-3 text-start">{{ room }}</p>
+    <div class="container">
+        <div class="row">
+            <div class="col photo-container">
+                <img src="{{room.photo.url}}" class="rounded float-start" width="900" height="500">
+                <div class="badge-photo">{{room.rating}}</div>
+            </div>
+            <div class="col-2">
+                <div class="card mb-2" style="width: 15rem;">
+                    <div class="card-body">
+                        <div class="card-title text-end">
+                            <p class="fs-6 text-secondary" style="display: inline">{{room.reviews.count}} Відгуки</p>
+                            <p class="fs-5" style="display: inline"><span
+                                    class="badge text-bg-primary">{{room.rating}}</span></p>
+                        </div>
+                        <hr>
+                        <p class="fs-5">Відгуки</p>
+                        <div id="carouselReview" class="carousel slide">
+                            <div class="carousel-inner">
+                                {% for review in reviews %}
+                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                    <p class="fs-5 text-start">{{review.user}}<span class="badge text-bg-primary">{{review.rating}}</span>
+                                    </p>
+                                    <p class="fs-6 text-start">{{review.comment}}</p>
+                                </div>
+                                {% empty %}
+                                <div class="carousel-item active">
+                                    <p>Поки немає відгуків.</p>
+                                </div>
+                                {% endfor %}
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselReview"
+                                        data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselReview"
+                                        data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                            <hr>
+                            <a class="btn btn-primary" href="{% url 'booking_form' room.pk %}">Замовити</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-2 mt-2" style="width: 15rem;">
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <p>Rating:
+                                <output id="value"></output>
+                            </p>
+                            {{ review_form.as_p }}
+                            <button type="submit" class="btn btn-outline-primary">add a review</button>
+                        </form>
+                        <script>
+                            const value = document.querySelector("#value");
+                            const input = document.querySelector("#rating_input");
+                            value.textContent = input.value;
+                            input.addEventListener("input", (event) => {
+                              value.textContent = event.target.value;
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p class="text-xl-start" style="width: 500px;">Опис:<br>{{ room.describe }}</p>
+                <p class="text-xl-start">Ціна:<br>{{ room.price }} UAH</p>
+                <p class="text-xl-start">Клас:<br>{{ room.get_classes_display }}</p>
+            </div>
+        </div>
+        <hr>
+        <h1>Активні замовлення:</h1><br>
+        <div class="row">
+            {% for booking in bookings %}
+            <div class="col-md-4 text-start">
+                <div class="card {% if booking.status == '_active' %}border-success{% elif booking.status == '_done' %}border-primary{% elif booking.status == '_cancelled' %}border-danger{% else %}border-warning{% endif %} mb-4">
+                    <div class="card-body {% if booking.status == '_active' %}text-success{% elif booking.status == '_done' %}text-primary{% elif booking.status == '_cancelled' %}text-danger{% else %}text-warning{% endif %}">
+                        <h5 class=" {% if booking.status == '_active' %}text-success{% elif booking.status == '_done' %}text-primary{% elif booking.status == '_cancelled' %}text-danger{% else %}text-warning{% endif %}">
+                            {{ booking }}</h5>
+                        <p class="card-text fw-lighter text-secondary">{{ booking.get_status_display }}</p>
+                        <p class="card-text">{{ booking.start_time }} - {{ booking.end_time }}</p>
 
-<div class="border border-primary">
-    <h3 class="display-4">Опис</h3>
-    <hr class="border border-primary border-3 opacity-75">
-    <p class="fs-4">{{ room.describe }}</p>
+                        {% if request.user == booking.user or request.user.is_super_user %}
+                        <a href="{% url 'delete_booking' booking.id %}" class='btn btn-danger'><i
+                                class="bi bi-trash"></i> Delete</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 </div>
 
-<br>
-
-<div class="border border-primary">
-    <h3 class="display-4">Ціна</h3>
-    <hr class="border border-primary border-3 opacity-75">
-    <p class="fs-4">{{ room.price }} UAH</p>
-</div>
 {% endblock %}

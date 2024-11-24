@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>economy rooms</title>
+{% endblock title %}
+
+{% load static %}
+
+{% block content %}
+
+<h1>ЕКОНОМ КЛАС</h1>
+<hr>
+
+<div class="container">
+    <div class="row row-cols-4">
+        {% for room in rooms %}
+        <div class="col">
+            <a href="{% url 'room' room.pk %}" style="text-decoration: none;">
+                <div class="card border-dark" style="width: 16rem;">
+                    <img src="{{room.photo.url}}" height="150" class="card-img-top">
+                    <div class="card-body text-start lh-2">
+                        <h5 class="card-title">{{room.number}}</h5>
+                        <p class="card-text fw-lighter"><div
+                                style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">{{room.describe}}</div><br><span
+                                class="badge text-bg-primary">{{room.rating}}</span>
+                            {{room.reviews.count}} людей проголосували</p>
+
+                        <div class="text-end">
+                            {% if room.discount %}
+                            <p class="fs-6 text-danger text-end" style="display: inline"><s>{{room.discount}} UAH</s>
+                            </p>
+                            {% endif %}
+                            <p class="fs-5 text-end" style="display: inline">{{room.price}} UAH</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <br>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
